@@ -1,10 +1,6 @@
 # Whisper Input
 
-Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-4730-B6B9-2DC883B986B1)启发做的一个简单的 python 代码。可以实现按下 Option 按钮开始录制，抬起按钮就结束录制，并调用 Groq `Whisper Large V3 Turbo` 模型进行转译，由于 Groq 的速度非常快，所以大部分的语音输入都可以在 1-2s 内反馈。并且得益于 whisper 的强大能力，转译效果非常不错。
-
-- 🎉🎉由于目前已经发现了更好用的语音输入软件[WhisperKeyBoard](https://whisperkeyboard.app/)，非常推荐大家可以直接使用这款软件即可。Whisper Input 的中心将继续回到 Voice + Agents 上。
-
-- 支持由 SiliconFlow 托管的 `FunAudioLLM/SenseVoiceSmall` 模型，速度比 Groq 托管的 `Whisper Large V3 Turbo` 更快，识别更准确，并且自带标点符号。**最重要的是普通用户也无用量限制！**
+Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-4730-B6B9-2DC883B986B1)启发做的一个简单的 python 代码。可以实现按下 Option 按钮开始录制，抬起按钮就结束录制，并调用 Groq Whisper Large V3 Turbo 模型进行转译，由于 Groq 的速度非常快，所以大部分的语音输入都可以在 1-2s 内反馈。并且得益于 whisper 的强大能力，转译效果非常不错。
 
 ## 功能
 
@@ -19,62 +15,12 @@ Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-473
 
 
 
-**重点：Groq 和 SiliconFlow 都提供免费用量，并且都足够，无需付费，无需绑定信用卡**
+**重点：Groq 只要注册，就提供一定的免费用量，并且在我们这个使用场景下免费已经完全够用了！**
 
+**🧐 当然，如果你在国内使用，并且无法访问 Groq 或者无法获得 Groq API，也欢迎反馈。因为我过去还做了一个 Groq 的 Whisper 代理池，理论上可以免费提供相对比较大的并发以及日常使用。但这需要你来单独申请，我会根据大家的需求考虑在后续的代码更新里添加对应的支持**
 
 ## 使用方法
 
-> 目前支持两种免费的 ASR 模型，分别是 Groq 托管的 `Whisper Large V3 系列` 以及 SiliconFlow 托管的 `FunAudioLLM/SenseVoiceSmall` 系列。所以以下配置只需要二选一即可。
-
-### 前提
-请确保你的本地有 Python 环境，并且 Python 版本不低于 3.10。
-
-### FunAudioLLM/SenseVoiceSmall 模型配置方法
-1. 注册 SiliconFlow 账户：https://siliconflow.cn/zh-cn/models
-2. 创建并复制免费的 API KEY：https://cloud.siliconflow.cn/account/ak
-3. 打开 `终端` ，进入到想要下载项目的文件夹
-    ```bash
-    git clone git@github.com:ErlichLiu/Whisper-Input.git
-    ```
-4. 创建虚拟环境 【推荐】
-    ```bash
-    python -m venv venv
-    ```
-
-5. 重命名 `.env` 文件
-    ```bash
-    cp .env.example .env
-    ```
-
-6. 粘贴在第 2 步复制的 API KEY 到 `.env`  文件，效果类似
-    ```bash
-    SERVICE_PLATFORM=siliconflow
-    SILICONFLOW_API_KEY=sk_z8q3rXrQM3o******************8dQEJCYz3QTJQYZ
-    ```
-
-7. 在最好不需要关闭的 `终端` 内进入到对应文件夹，然后激活虚拟环境
-    ```bash
-    # macOS / Linux
-    source venv/bin/activate
-    
-    # Windows
-    .\venv\Scripts\activate
-    ```
-
-8. 安装依赖
-    ```bash
-    pip install pip-tools
-    pip-compile requirements.in
-    pip install -r requirements.txt
-    ```
-
-9. 运行程序
-    ```bash
-    python main.py
-    ```
-
-
-### Groq Whisper Large V3 模型配置方法
 1. 注册 Groq 账户：https://console.groq.com/login
 2. 复制 Groq 免费的 API KEY：https://console.groq.com/keys
 3. 打开 `终端` ，进入到想要下载项目的文件夹
@@ -85,6 +31,10 @@ Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-473
     ```bash
     python -m venv venv
     ```
+    或者
+    ```bash
+    conda create -n Whisper python=3.11
+    ```
 
 5. 重命名 `.env` 文件
     ```bash
@@ -93,7 +43,6 @@ Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-473
 
 6. 粘贴在第 2 步复制的 API KEY 到 `.env`  文件，效果类似
     ```bash
-    SERVICE_PLATFORM=groq
     GROQ_API_KEY=gsk_z8q3rXrQM3o******************8dQEJCYz3QTJQYZ
     ```
 
@@ -101,15 +50,17 @@ Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-473
     ```bash
     # macOS / Linux
     source venv/bin/activate
+    或者
+    conda activate Whisper
     
     # Windows
     .\venv\Scripts\activate
+    或者
+    conda activate Whisper
     ```
 
 8. 安装依赖
     ```bash
-    pip install pip-tools
-    pip-compile requirements.in
     pip install -r requirements.txt
     ```
 
@@ -117,8 +68,27 @@ Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-473
     ```bash
     python main.py
     ```
+    或者修改 `start.command` 文件，将 `source ~/.zshrc` 改为 `source ~/.bash_profile`（根据个人终端情况选择）
+    然后双击 `start.command` 文件即可运行在后台并在系统状态栏显示
 
-    
+10. （可选）创建独立应用程序
+    1. 打开 Automator（在应用程序文件夹中或使用 Spotlight 搜索）
+    2. 选择"新建文稿"，然后选择"应用程序"
+    3. 在左侧搜索栏中搜索"运行 Shell 脚本"，将其拖到右侧工作区
+    4. 在脚本框中输入以下内容（请根据实际路径修改）：
+        ```bash
+        SCRIPT_PATH="你的本地路径/start.command"
+        "$SCRIPT_PATH"
+        ```
+    5. 点击"文件" -> "存储"，将应用程序命名为"Whisper Input.app"
+    6. 自定义应用图标（可选）：
+        - 右键点击"Whisper Input.app"
+        - 选择"显示简介"
+        - 点击左上角的图标
+        - 拖入你想要的图标文件（.icns 格式）或图片
+
+
+
 
 **🎉  此时你就可以按下 Option 按钮开始语音识别录入啦！**
 
@@ -126,9 +96,7 @@ Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-473
 
 ![image-20250111140954085](https://img.erlich.fun/personal-blog/uPic/image-20250111140954085.png)
 
-## Tips
 
-由于这个程序需要一直在后台运行，所以最好找一个自己不会经常下意识关掉的终端或者终端里的 Tab 来运行，不然很容易会不小心关掉。
 
 
 
@@ -144,7 +112,7 @@ Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-473
 
 [✅] 中文或多语言转译为英文
 
-[✅] 标点符号支持
+[  ] 标点符号支持
 
 [  ] 添加 Agents，或许可以实现一些屏幕截图，根据上下文做一些输入输出之类的
 
@@ -154,31 +122,8 @@ Whisper Input 是受到即友[FeiTTT](https://web.okjike.com/u/DB98BE7A-9DBB-473
 
 ## 更新日志
 
-#### 2025.01.19
-> 1. 添加对 SiliconFlow 硅基流动托管的转译模型[FunAudioLLM/SenseVoiceSmall](https://docs.siliconflow.cn/api-reference/audio/create-audio-transcriptions) 的支持，自带标点，无需润色，输出结果更快。由 @WEIFENG2333 贡献。
-
-#### 2025.01.16
-> 1. 添加标点和优化进行区分，并且默认不优化转译内容
-> 2. 去除掉状态展示的动画
-> 3. 修复没有重置状态的 Bug，当录音时间小于 1s 时，会触发重置，避免后续的错误
-
-#### 2025.01.15
-> 1. 支持 Windows，所有用户需要根据自己的本地环境 pip-compile 
-> 2. 采用字节流 buffer 存储录音，不需要存储到本地
-
-#### 2025.01.14
-> 1. 支持语音输入结果优化，并更换推荐模型为 `Llama 3.3 70B`，同样免费
-
-#### 2025.01.13
-> 1. 支持国内网络，无需申请 Groq API KEY 可以免费使用，Erlich 提供免费代理 API KEY
-> 2. 通过环境变量支持将繁体中文转化为简体中文 `.env` ，`CONVERT_TO_SIMPLIFIED=true`，默认开启
-> 3. 通过环境变量支持添加标点符号功能 `.env`，`ADD_SYMBOL=true`，默认开启，可以更换模型
-
-#### 2025.01.12
-> 1. 增加了一个延迟 0.5s 的触发，方便在一些快捷键需要用到 Option/Alt 按钮时不会被误触
-> 2. 重构代码
-
 #### 2025.01.11
+
 > 1. 支持快捷键按下后的状态显示【正在录音、正在转译/翻译、完成】
 > 2. 支持多语言语音转换为英文输出
 
